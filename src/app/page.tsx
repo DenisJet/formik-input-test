@@ -1,5 +1,9 @@
-import Image from "next/image";
+import FormComponent from "@/components/FormComponent/FormComponent";
 
 export default function Home() {
-  return <div>Page</div>;
+  return (
+    <div className="flex justify-center align-center p-5">
+      <FormComponent />
+    </div>
+  );
 }
