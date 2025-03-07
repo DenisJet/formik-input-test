@@ -2,6 +2,7 @@
 import { Formik, Form } from "formik";
 import { Button } from "@chakra-ui/react";
 import InputField from "../InputField/InputField";
+import { formValidationSchema } from "./formValidationSchema";
 
 export default function FormComponent() {
   const radioOptions = ["email", "sms"];
@@ -19,8 +20,10 @@ export default function FormComponent() {
         notifications: "email",
         accept: false,
       }}
-      onSubmit={(values) => {
+      validationSchema={formValidationSchema}
+      onSubmit={(values, actions) => {
         console.log(values);
+        actions.resetForm();
       }}
     >
       <Form className="w-[500px] flex flex-col gap-4">

@@ -2,6 +2,7 @@ import React from "react";
 import { Input, Checkbox, HStack } from "@chakra-ui/react";
 import { useField } from "formik";
 import { Radio, RadioGroup } from "../ui/radio";
+import { Field } from "../ui/field";
 
 type InputFieldProps = {
   name: string;
@@ -21,12 +22,17 @@ export default function InputField({
   return (
     <div>
       {type === "checkbox" ? (
-        <Checkbox.Root {...field}>
+        <Checkbox.Root {...field} invalid={!!(meta.touched && meta.error)}>
           <Checkbox.HiddenInput />
           <Checkbox.Control>
             <Checkbox.Indicator />
           </Checkbox.Control>
           <Checkbox.Label>{label}</Checkbox.Label>
+          {meta.touched && meta.error && (
+            <div className="text-red-400 font-light !text-xs text-right">
+              {meta.error}
+            </div>
+          )}
         </Checkbox.Root>
       ) : type === "radio" ? (
         <RadioGroup {...field} id={name}>
@@ -40,10 +46,13 @@ export default function InputField({
           </HStack>
         </RadioGroup>
       ) : (
-        <div>
-          <label htmlFor={name}>{label}</label>
+        <Field
+          invalid={!!(meta.touched && meta.error)}
+          label={label}
+          errorText={meta.error}
+        >
           <Input {...field} id={name} type={type} />
-        </div>
+        </Field>
       )}
     </div>
   );
