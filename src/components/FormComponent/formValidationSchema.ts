@@ -1,5 +1,15 @@
 import * as Yup from "yup";
 
+Yup.setLocale({
+  mixed: {
+    required: "Поле обязательно для заполнения",
+  },
+  number: {
+    min: "Значение не может быть меньше ${min}",
+    max: "Значение не может быть больше ${max}",
+  },
+});
+
 Yup.addMethod(
   Yup.number,
   "moreThanSumOfFields",
@@ -21,30 +31,23 @@ Yup.addMethod(
 );
 
 export const formValidationSchema = Yup.object({
-  name: Yup.string().required("Поле обязательно для заполнения"),
-  address: Yup.string().required("Поле обязательно для заполнения"),
+  name: Yup.string().required(),
+  address: Yup.string().required(),
   floor: Yup.number()
-    .required("Поле обязательно для заполнения")
-    .min(-1, "Значение не может быть меньше -1")
+    .required()
+    .min(-1)
     .max(
       Yup.ref("totalFloors"),
       "Значение не может быть больше количества этажей в доме",
     ),
-  totalFloors: Yup.number()
-    .required("Поле обязательно для заполнения")
-    .min(3, "Значение не может быть меньше 3")
-    .max(200, "Значение не может быть больше 200"),
+  totalFloors: Yup.number().required().min(3).max(200),
   square: Yup.number()
-    .required("Поле обязательно для заполнения")
-    .min(0, "Значение не может быть меньше 0")
-    .max(400, "Значение не может быть больше 400")
+    .required()
+    .min(0)
+    .max(400)
     .moreThanSumOfFields(["livingSquare", "kitchenSquare"]),
-  livingSquare: Yup.number()
-    .required("Поле обязательно для заполнения")
-    .min(0, "Значение не может быть меньше 0"),
-  kitchenSquare: Yup.number()
-    .required("Поле обязательно для заполнения")
-    .min(0, "Значение не может быть меньше 0"),
+  livingSquare: Yup.number().required().min(0),
+  kitchenSquare: Yup.number().required().min(0),
   accept: Yup.boolean().oneOf(
     [true],
     "Необходимо согласие на обработку данных",

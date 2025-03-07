@@ -22,7 +22,12 @@ export default function InputField({
   return (
     <div>
       {type === "checkbox" ? (
-        <Checkbox.Root {...field} invalid={!!(meta.touched && meta.error)}>
+        <Checkbox.Root
+          {...field}
+          checked={field.value}
+          onCheckedChange={() => field.onChange}
+          invalid={!!(meta.touched && meta.error)}
+        >
           <Checkbox.HiddenInput />
           <Checkbox.Control>
             <Checkbox.Indicator />

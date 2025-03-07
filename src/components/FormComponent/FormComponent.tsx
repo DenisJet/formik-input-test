@@ -3,10 +3,9 @@ import { Formik, Form } from "formik";
 import { Button } from "@chakra-ui/react";
 import InputField from "../InputField/InputField";
 import { formValidationSchema } from "./formValidationSchema";
+import { toaster } from "../ui/toaster";
 
 export default function FormComponent() {
-  const radioOptions = ["email", "sms"];
-
   return (
     <Formik
       initialValues={{
@@ -24,6 +23,10 @@ export default function FormComponent() {
       onSubmit={(values, actions) => {
         console.log(values);
         actions.resetForm();
+        toaster.create({
+          description: "Данные успешно отправлены в консоль браузера!",
+          type: "success",
+        });
       }}
     >
       <Form className="w-[500px] flex flex-col gap-4">
@@ -44,7 +47,7 @@ export default function FormComponent() {
           name="notifications"
           label="Получать уведомления по:"
           type="radio"
-          options={radioOptions}
+          options={["email", "sms"]}
         />
 
         <InputField
